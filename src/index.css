@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #f7df1e;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0e1320;
+  color: #e6eaf3;
+}
+
+/* highlight.js — atom-one-dark inspired, matches the original palette */
+.hljs {
+  color: #cdd6e8;
+  background: none;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-link {
+  color: #c792ea;
+}
+.hljs-function .hljs-title,
+.hljs-title,
+.hljs-name {
+  color: #82aaff;
+}
+.hljs-string,
+.hljs-attr,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+  color: #c3e88d;
+}
+.hljs-comment,
+.hljs-quote,
+.hljs-meta {
+  color: #5a6483;
+  font-style: italic;
+}
+.hljs-number,
+.hljs-built_in,
+.hljs-type {
+  color: #f78c6c;
+}
+.hljs-deletion {
+  color: #f07178;
+}
+
+/* prose tweaks for markdown answers */
+.prose-answer {
+  --tw-prose-body: #8a94ad;
+  --tw-prose-headings: #e6eaf3;
+  --tw-prose-bold: #e6eaf3;
+  --tw-prose-bullets: #5a6483;
+  --tw-prose-counters: #5a6483;
+  --tw-prose-code: var(--accent);
+  --tw-prose-pre-bg: #0b0f1a;
+  --tw-prose-pre-code: #cdd6e8;
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+.prose-answer :where(code):not(:where(pre code)) {
+  background: #1b2236;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-weight: 400;
+}
+.prose-answer :where(pre) {
+  border: 1px solid #262f47;
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  margin: 8px 0 12px;
+  padding: 13px 15px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+.prose-answer :where(pre code) {
+  background: none;
+  padding: 0;
+  font-size: 1em;
+}
+.prose-answer :where(ul) {
+  margin: 6px 0 10px 18px;
+  list-style: disc;
+}
+.prose-answer :where(li) {
+  margin-bottom: 5px;
+}
+.prose-answer :where(em) {
+  color: #b9c2d8;
+}
