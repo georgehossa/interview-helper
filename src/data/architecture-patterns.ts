@@ -266,5 +266,38 @@ Base de VSCode, Webpack, Babel, Vite, Rollup, Gatsby, Telerik Platform. Principi
 - **Aislamiento**: los plugins no deben romper el core — sandboxes, try/catch en cada hook. \
 - **Carga dinámica**: importación condicional para no inflar el bundle base.`,
     },
+    {
+      q: "Microfrontends",
+      a: `Aplica la idea de microservicios al front: divides una SPA grande en **apps independientes** que se integran en tiempo de ejecución, cada una con su propio build, deploy y equipo.
+
+\`\`\`
+           ┌─────────────────────────────┐
+           │  Shell / Container App      │
+           ├──────┬──────────┬───────────┤
+           │  ←   │  MFE A   │   MFE B   │  ← cada uno: build/deploy/route propios
+           │ nav  │ (catalog)│ (checkout)│
+           └──────┴──────────┴───────────┘
+\`\`\`
+
+Estrategias de integración:
+- **Build-time**: NPM packages que el shell compila. Simple pero acopla versiones — pierde autonomía.
+- **Run-time via iframe**: aislamiento total (DOM, JS, CSS), pero routing y comunicación engorrosos.
+- **Run-time via JS**: el shell carga un bundle remoto y lo monta en un nodo. **Module Federation** (Webpack 5) o \`@module-federation\` lo hace nativo.
+- **Server-side composition**: el servidor ensambla HTML desde varios MFEs (Next.js multi-zone, SSRI).
+
+Beneficios senior:
+- Equipos autónomos end-to-end (deployan su MFE sin coordinar con el resto).
+- Diversidad tecnológica gradual (puedes migrar un MFE de Angular a React sin tocar los demás).
+- Escalado organizativo — cada team posee una vertical de negocio.
+
+Costes:
+- **Bundle duplicado** (React cargado N veces) → shared dependencies con Module Federation.
+- **UX fragmentada**: diseño inconsistente, navegación entre MFEs, latencia al cambiar.
+- **Performance**: más código, hydration repetida, liñas de carga en cascada.
+- **Contratos de integración**: eventos globales, Query params, custom events — no hay estado global de verdad.
+- **Observabilidad**: tracing entre MFEs, CI/CD propio por MFE.
+
+Decisión senior: se justifican en **organizaciones grandes** (50+ devs, múltiples equipos) con dominios estables — no en startups ni apps medianas. En la mayoría de casos un monolito modular es más rentable.`,
+    },
   ],
 };
