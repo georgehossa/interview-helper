@@ -1,20 +1,30 @@
+import type { Lang } from "../types";
+
 interface ToolbarProps {
   query: string;
   mode: "study" | "quiz";
   accent: string;
+  lang: Lang;
+  langs: Lang[];
+  langLabel: Record<Lang, string>;
   onQuery: (v: string) => void;
   onMode: (m: "study" | "quiz") => void;
+  onLang: (l: Lang) => void;
 }
 
 export function Toolbar({
   query,
   mode,
   accent,
+  lang,
+  langs,
+  langLabel,
   onQuery,
   onMode,
+  onLang,
 }: ToolbarProps) {
   const modes: Array<{ id: "study" | "quiz"; label: string }> = [
-    { id: "study", label: "Estudio" },
+    { id: "study", label: lang === "es" ? "Estudio" : "Study" },
     { id: "quiz", label: "Quiz" },
   ];
 
@@ -25,7 +35,7 @@ export function Toolbar({
         <input
           value={query}
           onChange={(e) => onQuery(e.target.value)}
-          placeholder="Buscar concepto…"
+          placeholder={lang === "es" ? "Buscar concepto…" : "Search concept…"}
           className="flex-1 bg-transparent border-none outline-none text-ink font-sans text-[0.92rem]"
         />
       </div>
@@ -41,6 +51,21 @@ export function Toolbar({
             }}
           >
             {m.label}
+          </button>
+        ))}
+      </div>
+      <div className="flex bg-surface border border-border rounded-[10px] p-1 gap-1">
+        {langs.map((l) => (
+          <button
+            key={l}
+            onClick={() => onLang(l)}
+            className="font-mono text-[0.78rem] font-semibold py-[7px] px-[14px] rounded-[7px] cursor-pointer border-none transition-all duration-150"
+            style={{
+              background: lang === l ? accent : "transparent",
+              color: lang === l ? "#0e1320" : "#8a94ad",
+            }}
+          >
+            {langLabel[l]}
           </button>
         ))}
       </div>

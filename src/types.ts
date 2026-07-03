@@ -1,6 +1,13 @@
+export type Lang = "es" | "en";
+
+export interface LocalizedText {
+  es: string;
+  en: string;
+}
+
 export interface Card {
-  q: string;
-  a: string;
+  q: LocalizedText;
+  a: LocalizedText;
 }
 
 export interface Topic {

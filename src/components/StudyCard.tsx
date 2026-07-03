@@ -1,11 +1,12 @@
 import { useState } from "react";
-import type { Card } from "../types";
+import type { Card, Lang } from "../types";
 import { MarkdownAnswer } from "./MarkdownAnswer";
 
 interface StudyCardProps {
   card: Card;
   index: number;
   accent: string;
+  lang: Lang;
   open: boolean;
   onToggle: () => void;
 }
@@ -14,6 +15,7 @@ export function StudyCard({
   card,
   index,
   accent,
+  lang,
   open,
   onToggle,
 }: StudyCardProps) {
@@ -29,7 +31,9 @@ export function StudyCard({
         <span className="font-mono text-[0.72rem] text-dim min-w-[26px]">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="font-semibold text-[0.98rem] flex-1">{card.q}</span>
+        <span className="font-semibold text-[0.98rem] flex-1">
+          {card.q[lang]}
+        </span>
         <span
           className="transition-transform duration-200 text-[1.1rem]"
           style={{
@@ -42,7 +46,7 @@ export function StudyCard({
       </div>
       {open && (
         <div className="px-[18px] pb-[18px] pl-[58px] text-muted text-[0.93rem] leading-[1.6]">
-          <MarkdownAnswer>{card.a}</MarkdownAnswer>
+          <MarkdownAnswer>{card.a[lang]}</MarkdownAnswer>
         </div>
       )}
     </div>
@@ -52,15 +56,18 @@ export function StudyCard({
 interface StudyListProps {
   items: Card[];
   accent: string;
+  lang: Lang;
 }
 
-export function StudyList({ items, accent }: StudyListProps) {
+export function StudyList({ items, accent, lang }: StudyListProps) {
   const [open, setOpen] = useState<Record<number, boolean>>({});
 
   if (items.length === 0) {
     return (
       <div className="text-dim font-mono text-[0.85rem]">
-        Sin resultados para tu búsqueda.
+        {lang === "es"
+          ? "Sin resultados para tu búsqueda."
+          : "No results for your search."}
       </div>
     );
   }
@@ -73,6 +80,7 @@ export function StudyList({ items, accent }: StudyListProps) {
           card={it}
           index={i}
           accent={accent}
+          lang={lang}
           open={!!open[i]}
           onToggle={() => setOpen((o) => ({ ...o, [i]: !o[i] }))}
         />
