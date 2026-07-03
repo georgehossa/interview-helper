@@ -10,6 +10,8 @@ import { html } from "./html";
 import { css } from "./css";
 import { systemDesign } from "./system-design";
 import { designPatterns } from "./design-patterns";
+import { reactPatterns } from "./react-patterns";
+import { architecturePatterns } from "./architecture-patterns";
 
 export const TOPICS: Record<string, Topic> = {
   js: javascript,
@@ -23,6 +25,8 @@ export const TOPICS: Record<string, Topic> = {
   css: css,
   sysdesign: systemDesign,
   patterns: designPatterns,
+  "react-patterns": reactPatterns,
+  arch: architecturePatterns,
 };
 
 export const ORDER = [
@@ -37,4 +41,6 @@ export const ORDER = [
   "css",
   "sysdesign",
   "patterns",
+  "react-patterns",
+  "arch",
 ];
