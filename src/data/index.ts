@@ -8,6 +8,8 @@ import { nextjs } from "./nextjs";
 import { reactNative } from "./react-native";
 import { html } from "./html";
 import { css } from "./css";
+import { systemDesign } from "./system-design";
+import { designPatterns } from "./design-patterns";
 
 export const TOPICS: Record<string, Topic> = {
   js: javascript,
@@ -19,6 +21,8 @@ export const TOPICS: Record<string, Topic> = {
   rn: reactNative,
   html: html,
   css: css,
+  sysdesign: systemDesign,
+  patterns: designPatterns,
 };
 
 export const ORDER = [
@@ -31,4 +35,6 @@ export const ORDER = [
   "rn",
   "html",
   "css",
+  "sysdesign",
+  "patterns",
 ];
