@@ -1,14 +1,14 @@
-import type { Lang } from "../types";
+import type { Lang, Mode } from "../types";
 
 interface ToolbarProps {
   query: string;
-  mode: "study" | "quiz";
+  mode: Mode;
   accent: string;
   lang: Lang;
   langs: Lang[];
   langLabel: Record<Lang, string>;
   onQuery: (v: string) => void;
-  onMode: (m: "study" | "quiz") => void;
+  onMode: (m: Mode) => void;
   onLang: (l: Lang) => void;
 }
 
@@ -23,9 +23,10 @@ export function Toolbar({
   onMode,
   onLang,
 }: ToolbarProps) {
-  const modes: Array<{ id: "study" | "quiz"; label: string }> = [
+  const modes: Array<{ id: Mode; label: string }> = [
     { id: "study", label: lang === "es" ? "Estudio" : "Study" },
     { id: "quiz", label: "Quiz" },
+    { id: "ai", label: "AI" },
   ];
 
   return (

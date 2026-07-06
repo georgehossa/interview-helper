@@ -16,3 +16,11 @@ export interface Topic {
   color: string;
   items: Card[];
 }
+
+export type Mode = "study" | "quiz" | "ai";
+
+export interface AiGeneration {
+  prompt: string;
+  cards: Card[];
+  timestamp: number;
+}
