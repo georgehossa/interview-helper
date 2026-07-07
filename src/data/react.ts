@@ -198,5 +198,237 @@ const add = (n) => { total += n; };
 Benefits: predictable, easy to test, and it enables optimizations like \`React.memo\`, which trusts that the same input produces the same output.`,
       },
     },
+    {
+      q: {
+        es: "Componentes de clase vs funcionales",
+        en: "Class vs functional components",
+      },
+      a: {
+        es: `**Funcionales** son funciones que reciben props y retornan JSX. Son el estándar actual: más simples, fáciles de testear y pueden usar Hooks.
+
+**De clase** extienden \`React.Component\`, usan \`render()\` y manejan estado en \`this.state\`. Requieren entender \`this\`, \`bind\` y el ciclo de vida.
+
+| Aspecto | Clase | Funcional |
+|---|---|---|
+| Estado | \`this.state\` / \`this.setState\` | \`useState\` |
+| Ciclo de vida | Métodos (\`componentDidMount\`, etc.) | \`useEffect\` |
+| \`this\` | Sí | No |
+| Hooks | No | Sí |
+
+Hoy casi todo el código nuevo se escribe con componentes funcionales; las clases siguen vivas en bases de código antiguas.`,
+        en: `**Functional** components are functions that receive props and return JSX. They are the current standard: simpler, easier to test, and can use Hooks.
+
+**Class** components extend \`React.Component\`, use \`render()\`, and manage state in \`this.state\`. They require understanding \`this\`, \`bind\`, and the lifecycle.
+
+| Aspect | Class | Functional |
+|---|---|---|
+| State | \`this.state\` / \`this.setState\` | \`useState\` |
+| Lifecycle | Methods (\`componentDidMount\`, etc.) | \`useEffect\` |
+| \`this\` | Yes | No |
+| Hooks | No | Yes |
+
+Today almost all new code is written with functional components; classes remain in older codebases.`,
+      },
+    },
+    {
+      q: {
+        es: "Ciclo de vida en componentes de clase",
+        en: "Lifecycle in class components",
+      },
+      a: {
+        es: `Un componente de clase pasa por tres fases:
+
+**1. Montaje (Mounting)**
+- \`constructor()\` → inicializa estado y \`bind\`.
+- \`static getDerivedStateFromProps()\` → raro, para derivar estado de props.
+- \`render()\` → devuelve JSX.
+- \`componentDidMount()\` → ideal para fetch, suscripciones o timers.
+
+**2. Actualización (Updating)**
+- \`static getDerivedStateFromProps()\`
+- \`shouldComponentUpdate()\` → permite evitar re-render.
+- \`render()\`
+- \`getSnapshotBeforeUpdate()\` → captura info del DOM antes del cambio.
+- \`componentDidUpdate(prevProps, prevState, snapshot)\` → responde a cambios.
+
+**3. Desmontaje (Unmounting)**
+- \`componentWillUnmount()\` → cleanup: cancelar fetch, timers, suscripciones.
+
+**Manejo de errores**
+- \`static getDerivedStateFromError()\`
+- \`componentDidCatch()\` — *Error Boundaries*.`,
+        en: `A class component goes through three phases:
+
+**1. Mounting**
+- \`constructor()\` → initialize state and \`bind\`.
+- \`static getDerivedStateFromProps()\` → rare, derive state from props.
+- \`render()\` → returns JSX.
+- \`componentDidMount()\` → ideal for fetching, subscriptions, or timers.
+
+**2. Updating**
+- \`static getDerivedStateFromProps()\`
+- \`shouldComponentUpdate()\` → can prevent re-render.
+- \`render()\`
+- \`getSnapshotBeforeUpdate()\` → capture DOM info before the change.
+- \`componentDidUpdate(prevProps, prevState, snapshot)\` → react to changes.
+
+**3. Unmounting**
+- \`componentWillUnmount()\` → cleanup: cancel fetches, timers, subscriptions.
+
+**Error handling**
+- \`static getDerivedStateFromError()\`
+- \`componentDidCatch()\` — *Error Boundaries*.`,
+      },
+    },
+    {
+      q: {
+        es: "Ciclo de vida con Hooks",
+        en: "Lifecycle with Hooks",
+      },
+      a: {
+        es: `Los Hooks reemplazan los métodos de ciclo de vida con una API basada en sincronización:
+
+\`\`\`jsx
+useEffect(() => {
+  // componentDidMount + componentDidUpdate
+  console.log("montaje o cambio de dependencias");
+
+  return () => {
+    // componentWillUnmount + cleanup antes del próximo efecto
+    console.log("cleanup");
+  };
+}, [deps]);
+\`\`\`
+
+**Equivalencias**
+- Montaje: efecto con \`[]\`.
+- Actualización: efecto con dependencias.
+- Desmontaje: función de retorno del efecto.
+
+**Nuevos hooks de ciclo de vida (React 18+)**
+- \`useId\` → genera ids estables para accesibilidad.
+- \`useTransition\` → marca actualizaciones como no urgentes.
+- \`useDeferredValue\` → aplaza la actualización de un valor.
+- \`useSyncExternalStore\` → suscripción a stores externas.
+- \`useInsertionEffect\` → para inyectar estilos antes de layout.
+
+A diferencia de las clases, un mismo componente puede tener varios \`useEffect\` separados por responsabilidad.`,
+        en: `Hooks replace lifecycle methods with a synchronization-based API:
+
+\`\`\`jsx
+useEffect(() => {
+  // componentDidMount + componentDidUpdate
+  console.log("mount or dependency change");
+
+  return () => {
+    // componentWillUnmount + cleanup before the next effect
+    console.log("cleanup");
+  };
+}, [deps]);
+\`\`\`
+
+**Equivalents**
+- Mount: effect with \`[]\`.
+- Update: effect with dependencies.
+- Unmount: returned cleanup function.
+
+**New lifecycle-related hooks (React 18+)**
+- \`useId\` → stable ids for accessibility.
+- \`useTransition\` → mark updates as non-urgent.
+- \`useDeferredValue\` → defer a value update.
+- \`useSyncExternalStore\` → subscribe to external stores.
+- \`useInsertionEffect\` → inject styles before layout.
+
+Unlike classes, a single component can have multiple \`useEffect\` calls split by responsibility.`,
+      },
+    },
+    {
+      q: {
+        es: "useEffect vs useLayoutEffect",
+        en: "useEffect vs useLayoutEffect",
+      },
+      a: {
+        es: `Ambos ejecutan efectos secundarios, pero en **momentos distintos del commit**:
+
+- \`useEffect\` → corre **después** de que React pinta el DOM en pantalla. No bloquea el render. Es el valor por defecto para fetch, suscripciones, timers.
+- \`useLayoutEffect\` → corre **sincrónicamente** después de mutar el DOM pero **antes** de que el navegador lo pinte. Bloquea el pintado.
+
+\`\`\`jsx
+useLayoutEffect(() => {
+  // Mide o muta el DOM antes de que el usuario vea el frame
+  const { width } = ref.current.getBoundingClientRect();
+  setWidth(width);
+}, []);
+\`\`\`
+
+**Regla**: empieza con \`useEffect\`. Solo usa \`useLayoutEffect\` cuando notes parpadeo visual o necesites medir/mutar el DOM antes del paint.
+
+En SSR, \`useLayoutEffect\` emite una advertencia porque no hay navegador; usa \`useEffect\` o un check de \`typeof window\`.`,
+        en: `Both run side effects, but at **different points in the commit**:
+
+- \`useEffect\` → runs **after** React paints the DOM to the screen. Does not block rendering. The default for fetch, subscriptions, timers.
+- \`useLayoutEffect\` → runs **synchronously** after DOM mutations but **before** the browser paints. Blocks the paint.
+
+\`\`\`jsx
+useLayoutEffect(() => {
+  // Measure or mutate the DOM before the user sees the frame
+  const { width } = ref.current.getBoundingClientRect();
+  setWidth(width);
+}, []);
+\`\`\`
+
+**Rule**: start with \`useEffect\`. Only use \`useLayoutEffect\` when you see visual flicker or need to measure/mutate the DOM before paint.
+
+In SSR, \`useLayoutEffect\` warns because there is no browser; use \`useEffect\` or a \`typeof window\` check.`,
+      },
+    },
+    {
+      q: {
+        es: "Suspense",
+        en: "Suspense",
+      },
+      a: {
+        es: `\`<Suspense fallback={<Spinner />}>\` permite mostrar un UI temporal mientras los componentes hijos están **cargando** (datos, imágenes, código lazy).
+
+\`\`\`jsx
+const Perfil = lazy(() => import("./Perfil"));
+
+<Suspense fallback={<Cargando />}>
+  <Perfil />
+</Suspense>
+\`\`\`
+
+**Cómo funciona**
+- Un componente hijo levanta una "señal" de suspensión (por ejemplo, \`throw\` de una promesa o lazy load).
+- React detiene el render de ese árbol y muestra el \`fallback\` más cercano.
+- Cuando la promesa se resuelve, React reintenta el render.
+
+**Caso clásico**: code splitting con \`React.lazy\`.
+
+**React 18+**: Suspense también funciona con data fetching en frameworks compatibles (Next.js, Relay) y mejora la experiencia de carga concurrente.
+
+**\`<SuspenseList>\`** (experimental) controla el orden en que se revelan múltiples Suspenses.`,
+        en: `\`<Suspense fallback={<Spinner />}>\` lets you show a temporary UI while child components are **loading** (data, images, lazy code).
+
+\`\`\`jsx
+const Profile = lazy(() => import("./Profile"));
+
+<Suspense fallback={<Loading />}>
+  <Profile />
+</Suspense>
+\`\`\`
+
+**How it works**
+- A child component triggers a suspension signal (e.g., \`throw\`ing a promise or lazy loading).
+- React pauses rendering that tree and shows the nearest \`fallback\`.
+- When the promise resolves, React retries the render.
+
+**Classic use case**: code splitting with \`React.lazy\`.
+
+**React 18+**: Suspense also works with data fetching in compatible frameworks (Next.js, Relay) and improves concurrent loading UX.
+
+**\`<SuspenseList>\`** (experimental) controls the reveal order of multiple Suspense boundaries.`,
+      },
+    },
   ],
 };
