@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { Card, Lang } from "../types";
 import { MarkdownAnswer } from "./MarkdownAnswer";
+import { DeepResearchButton } from "./DeepResearchButton";
+import { t } from "../i18n";
 
 interface StudyCardProps {
   card: Card;
@@ -19,6 +21,8 @@ export function StudyCard({
   open,
   onToggle,
 }: StudyCardProps) {
+  const strings = t(lang);
+
   return (
     <div
       className="bg-surface rounded-[14px] mb-[10px] overflow-hidden transition-[border-color] duration-200"
@@ -47,6 +51,14 @@ export function StudyCard({
       {open && (
         <div className="px-[18px] pb-[18px] pl-[58px] text-muted text-[0.93rem] leading-[1.6]">
           <MarkdownAnswer>{card.a[lang]}</MarkdownAnswer>
+          <div className="mt-4">
+            <DeepResearchButton
+              card={card}
+              lang={lang}
+              label={strings.deepResearch}
+              title={strings.deepResearchTitle}
+            />
+          </div>
         </div>
       )}
     </div>

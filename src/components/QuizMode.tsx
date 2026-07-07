@@ -1,7 +1,9 @@
 import { useCallback, useState } from "react";
 import type { Card, Lang } from "../types";
 import { MarkdownAnswer } from "./MarkdownAnswer";
+import { DeepResearchButton } from "./DeepResearchButton";
 import { useQuizKeyboard } from "../hooks/useQuizKeyboard";
+import { t } from "../i18n";
 
 interface QuizModeProps {
   items: Card[];
@@ -53,6 +55,7 @@ export function QuizMode({ items, accent, topicName, lang }: QuizModeProps) {
   const revealSuffix = lang === "es"
     ? "para ver la respuesta"
     : "to reveal the answer";
+  const strings = t(lang);
 
   return (
     <div>
@@ -77,6 +80,16 @@ export function QuizMode({ items, accent, topicName, lang }: QuizModeProps) {
           </div>
         )}
       </div>
+      {revealed && (
+        <div className="mt-[12px]">
+          <DeepResearchButton
+            card={card}
+            lang={lang}
+            label={strings.deepResearch}
+            title={strings.deepResearchTitle}
+          />
+        </div>
+      )}
       <div className="flex items-center gap-3 mt-[18px] flex-wrap">
         <button
           disabled={safeQi > 0 ? false : true}

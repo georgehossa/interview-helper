@@ -39,6 +39,8 @@ interface UIStrings {
   aiBackToTopics: string;
   aiShowingGenerated: string;
   aiClear: string;
+  deepResearch: string;
+  deepResearchTitle: string;
 }
 
 const STRINGS: Record<Lang, UIStrings> = {
@@ -82,6 +84,8 @@ const STRINGS: Record<Lang, UIStrings> = {
     aiBackToTopics: "Volver a temas",
     aiShowingGenerated: "Mostrando tarjetas generadas por AI",
     aiClear: "Limpiar",
+    deepResearch: "Profundizar",
+    deepResearchTitle: "Buscar más sobre este tema en Google",
   },
   en: {
     prepLabel: "interview prep",
@@ -123,6 +127,8 @@ const STRINGS: Record<Lang, UIStrings> = {
     aiBackToTopics: "Back to topics",
     aiShowingGenerated: "Showing AI-generated cards",
     aiClear: "Clear",
+    deepResearch: "Go deep",
+    deepResearchTitle: "Search Google for more on this topic",
   },
 };
 
