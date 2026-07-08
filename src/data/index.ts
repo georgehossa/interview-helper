@@ -4,6 +4,9 @@ import { typescript } from "./typescript";
 import { node } from "./node";
 import { apis } from "./apis";
 import { react } from "./react";
+import { reactQuery } from "./react-query";
+import { reactForms } from "./react-forms";
+import { reactPerformance } from "./react-performance";
 import { nextjs } from "./nextjs";
 import { reactNative } from "./react-native";
 import { html } from "./html";
@@ -19,6 +22,9 @@ export const TOPICS: Record<string, Topic> = {
   node: node,
   apis: apis,
   react: react,
+  "react-query": reactQuery,
+  "react-forms": reactForms,
+  "react-perf": reactPerformance,
   next: nextjs,
   rn: reactNative,
   html: html,
@@ -35,6 +41,9 @@ export const ORDER = [
   "node",
   "apis",
   "react",
+  "react-query",
+  "react-forms",
+  "react-perf",
   "next",
   "rn",
   "html",
